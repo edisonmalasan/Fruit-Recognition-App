@@ -7,8 +7,8 @@
 
     <style name="Theme.StrawberryRipenessDetectionApp" parent="Base.Theme.StrawberryRipenessDetectionApp" />
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/logo_tentative_1</item>
+        <item name="windowSplashScreenBackground">@color/red</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logomdpi</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.StrawberryRipenessDetectionApp</item>
     </style>
 </resources>
