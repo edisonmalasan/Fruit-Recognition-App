@@ -152,4 +152,5 @@
         <!-- Add strawberry cards here (or kung ano tawag sa component na yun) -->
     </LinearLayout> <!-- Main layout -->
 
+    <!-- ndi narecognize commit ko -->
 </androidx.core.widget.NestedScrollView>
