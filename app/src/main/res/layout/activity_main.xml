@@ -1,20 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Main layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Top bar layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:orientation="horizontal"
+            android:padding="50dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:contentDescription="@string/logo_desc"
+                android:src="@drawable/logo_tentative_1" />
+
+            <View
+                android:layout_width="16dp"
+                android:layout_height="0dp" />
+
+            <!-- Welcome message layout -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/main_welcome_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_message"
+                    android:fontFamily="@font/gilroy_extrabold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sub_caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sub_caption"
+                    android:fontFamily="@font/gilroy_regular"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout> <!-- Welcome message layout -->
+        </LinearLayout> <!-- Top bar layout -->
+
+        <!-- Table layout -->
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Camera icon -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp">
+
+                <!-- Image column -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/camera"
+                    android:contentDescription="@string/camera"
+                    android:layout_gravity="center_vertical"/>
+
+                <!-- Text column -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/gilroy_regular"
+                    android:textColor="@color/black"
+                    android:text="@string/camara_desc"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <!-- Gallery icon -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp">
+
+                <!-- Image column -->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/gallery"
+                    android:src="@drawable/gallery"
+                    android:layout_gravity="center_vertical"/>
+
+                <!-- Text column -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/gallery_desc"
+                    android:fontFamily="@font/gilroy_regular"
+                    android:textColor="@color/black"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <!-- Upload icon -->
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp">
+
+                <!-- Image column -->
+                <ImageView
+                    android:contentDescription="@string/upload"
+                    android:src="@drawable/upload"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"/>
+
+                <!-- Text column -->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/upload_desc"
+                    android:fontFamily="@font/gilroy_regular"
+                    android:textColor="@color/black"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textSize="12sp" />
+            </TableRow>
+        </TableLayout>
+
+        <!-- Add strawberry cards here (or kung ano tawag sa component na yun) -->
+    </LinearLayout> <!-- Main layout -->
+
+</androidx.core.widget.NestedScrollView>

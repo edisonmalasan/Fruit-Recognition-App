@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Strawberry Ripeness Detection App</string>
+    <string name="enter_text">Enter text</string>
+    <string name="logo_desc">App Logo</string>
+    <string name="welcome_message">Welcome to our Strawberry Ripeness Detection App!"</string>
+    <string name="sub_caption">Distinguish your strawberries with a click</string>
+    <string name="camara_desc">This image recognition application allows you to use your camera to scan your strawberries to determine if it is ripe or unripe</string>
+    <string name="gallery_desc">Upload images of strawberries from your device’s gallery that will be used for detection</string>
+    <string name="upload_desc">Add images of strawberries to the training model and label their ripeness status (will process verification) for further accuracy</string>
+    <string name="camera">camera</string>
+    <string name="gallery">gallery</string>
+    <string name="upload">upload</string>
 </resources>
