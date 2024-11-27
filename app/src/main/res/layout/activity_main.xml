@@ -13,9 +13,10 @@
 
         <!-- Top bar layout -->
         <LinearLayout
+            android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/red"
+            android:background="@drawable/bg_top_bar"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="45dp"
@@ -169,9 +170,8 @@
                 android:text="@string/start_app"
                 android:backgroundTint="@color/red"
                 android:textColor="@color/white"
-                android:gravity="center"
-                />
- />
+                android:gravity="center" />
+
 
         </LinearLayout>
 
@@ -189,13 +189,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/gilroy_bold"
-                android:text="\u00A9 Team RAMEL"
+                android:text="@string/team_lemar"
                 android:textColor="#41FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This image classification model was trained using TensorFlow."
+                android:text="@string/disclaimer"
                 android:fontFamily="@font/gilroy_light"
                 android:textSize="12sp"
                 android:textColor="@color/white"
