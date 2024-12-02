@@ -69,6 +69,15 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(mainBinding.root)
 
+        val localImageButton: ImageButton = findViewById(R.id.local_imageIB)
+
+        localImageButton.setOnClickListener {
+            // Create an Intent to open the local image picker
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*" // Filter for images only
+            startActivityForResult(intent, 100) // 100 is the request code
+        }
+
         if (checkMultiplePermission()) {
             startCamera()
         }
@@ -267,5 +276,20 @@ class CameraActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
+            // Get the URI of the selected image
+            val selectedImageUri = data.data
+
+            // Perform any action with the selected image, like displaying it in an ImageView
+            if (selectedImageUri != null) {
+                // Example: Displaying the image in an ImageView
+                val imageView: ImageView = findViewById(R.id.local_imageIB) // Ensure this ImageView exists in your layout
+                imageView.setImageURI(selectedImageUri)
+            }
+        }
     }
 }
