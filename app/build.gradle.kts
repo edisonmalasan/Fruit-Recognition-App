@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.strawberryripenessdetectionapp"
+    namespace = "com.example.fruitrecognitionapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.strawberryripenessdetectionapp"
+        applicationId = "com.example.fruitrecognitionapp"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -60,5 +60,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // dependecies for pytorch
+    implementation ("com.squareup.picasso:picasso:2.8")
+    implementation ("org.pytorch:pytorch_android:1.12.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 
 }

@@ -1,4 +1,4 @@
-package com.example.strawberryripenessdetectionapp
+package com.example.fruitrecognitionapp
 
 import android.content.Context
 import android.content.DialogInterface

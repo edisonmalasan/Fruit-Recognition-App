@@ -1,23 +1,18 @@
-package com.example.strawberryripenessdetectionapp
+package com.example.fruitrecognitionapp
 
 import android.Manifest
-import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.camera.core.Camera
-import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
@@ -30,11 +25,7 @@ import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.strawberryripenessdetectionapp.appSettingOpen
-import com.example.strawberryripenessdetectionapp.warningPermissionDialog
-import com.example.strawberryripenessdetectionapp.databinding.CameraLayoutBinding
+import com.example.fruitrecognitionapp.databinding.CameraLayoutBinding
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale

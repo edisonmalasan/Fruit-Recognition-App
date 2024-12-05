@@ -1,4 +1,4 @@
-package com.example.strawberryripenessdetectionapp
+package com.example.fruitrecognitionapp
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

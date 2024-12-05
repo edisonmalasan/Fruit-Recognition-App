@@ -1,4 +1,4 @@
-package com.example.strawberryripenessdetectionapp
+package com.example.fruitrecognitionapp
 
 import org.junit.Test
 

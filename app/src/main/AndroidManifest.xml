@@ -16,7 +16,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.StrawberryRipenessDetectionApp"
+        android:theme="@style/Base.Theme.FruitRecognitionApp"
         tools:targetApi="31">
         <activity
             android:name=".CameraActivity"
