@@ -1,2 +1,2 @@
-# Strawberry-Ripeness-Recognition
+# Fruit Recognition App
 Image Recognition
