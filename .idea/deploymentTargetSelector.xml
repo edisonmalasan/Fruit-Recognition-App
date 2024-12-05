@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="CameraActivity">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-02T17:25:47.105287800Z">
+        <DropdownSelection timestamp="2024-12-05T15:42:01.321773800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=AESOBMNV9TJBYLGI" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\ediso\.android\avd\Medium_Phone_API_35.avd" />
             </handle>
           </Target>
         </DropdownSelection>
