@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.camera.core.Camera
 import android.os.Build
 import android.os.Bundle
@@ -66,7 +67,7 @@ class CameraActivity : AppCompatActivity() {
             // Create an Intent to open the local image picker
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*" // Filter for images only
-            startActivityForResult(intent, 100) // 100 is the request code
+            startActivityForResult(intent, requestCode = 100) // 100 is the request code
         }
 
         if (checkMultiplePermission()) {
@@ -256,6 +257,8 @@ class CameraActivity : AppCompatActivity() {
                         message,
                         Toast.LENGTH_LONG
                     ).show()
+
+                    processImage("selectedImageUri", outputFileResults.savedUri)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -274,13 +277,17 @@ class CameraActivity : AppCompatActivity() {
         if (requestCode == 100 && resultCode == RESULT_OK) {
             val selectedImageUri = data?.data
             if (selectedImageUri != null) {
-                val intent = Intent(this, FruitDetailsActivity::class.java)
-                intent.putExtra("selectedImageUri", selectedImageUri.toString())
-                startActivity(intent)
+                processImage("selectedImageUri",selectedImageUri)
             } else {
                 Toast.makeText(this, "Failed to select image", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
+    //passes selected or captured image into the trained model
+    private fun processImage(imageName : String, uri : Uri?) {
+        val intent = Intent(this@CameraActivity, FruitDetailsActivity::class.java)
+        intent.putExtra(imageName, uri.toString())
+        startActivity(intent)
+    }
 }
