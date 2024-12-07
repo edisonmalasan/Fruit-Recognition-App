@@ -14,6 +14,7 @@ import org.pytorch.IValue
 import org.pytorch.Module
 import org.pytorch.Tensor
 import java.io.File
+import java.io.InputStream
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
@@ -43,6 +44,7 @@ class FruitDetailsActivity : AppCompatActivity() {
 
         // Retrieve the image URI from the intent
         val selectedImageUri = intent.getStringExtra("selectedImageUri")
+        Log.d("FruitDetailsActivity", "Image URI: $selectedImageUri")
 
         if (selectedImageUri != null) {
             try {
@@ -93,18 +95,11 @@ class FruitDetailsActivity : AppCompatActivity() {
 
     private fun loadImageFromUri(imageUri: Uri): Bitmap? {
         return try {
-
-            //This fixes this error: Data buffer must be direct (java.nio.ByteBuffer#allocateDirect)
-            contentResolver.openInputStream(imageUri)?.use { inputStream ->
-                // Allocate a direct byte buffer
-                val buffer = ByteBuffer.allocateDirect(inputStream.available())
-                // Read the image data into the buffer
-                inputStream.read(buffer.array())
-                // Flip the buffer to prepare for decoding
-                buffer.flip()
-                // Decode the image from the buffer
-                BitmapFactory.decodeByteArray(buffer.array(), 0, buffer.limit())
-            } ?: run {
+            val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+            if (inputStream != null) {
+                // Read the image into a Bitmap
+                BitmapFactory.decodeStream(inputStream)
+            } else {
                 Toast.makeText(this, "Error loading image: InputStream is null", Toast.LENGTH_SHORT).show()
                 null
             }
@@ -116,9 +111,12 @@ class FruitDetailsActivity : AppCompatActivity() {
     }
 
     private fun preprocessImage(image: Bitmap): Tensor {
+        // Resize the image to 224x224 (as required by most models)
         val resizedImage = Bitmap.createScaledBitmap(image, 224, 224, true)
 
-        val floatBuffer = FloatBuffer.allocate(224 * 224 * 3)
+        // Convert the resized image to a float array (normalized RGB values)
+        val floatArray = FloatArray(224 * 224 * 3)
+
         val mean = floatArrayOf(0.485f, 0.456f, 0.406f)
         val std = floatArrayOf(0.229f, 0.224f, 0.225f)
 
@@ -128,12 +126,16 @@ class FruitDetailsActivity : AppCompatActivity() {
                 val r = (pixel shr 16) and 0xFF
                 val g = (pixel shr 8) and 0xFF
                 val b = pixel and 0xFF
-                floatBuffer.put((r / 255.0f - mean[0]) / std[0])
-                floatBuffer.put((g / 255.0f - mean[1]) / std[1])
-                floatBuffer.put((b / 255.0f - mean[2]) / std[2])
+
+                // Normalize the pixel values to match the model's expected range
+                floatArray[(y * 224 + x) * 3 + 0] = (r / 255.0f - mean[0]) / std[0]
+                floatArray[(y * 224 + x) * 3 + 1] = (g / 255.0f - mean[1]) / std[1]
+                floatArray[(y * 224 + x) * 3 + 2] = (b / 255.0f - mean[2]) / std[2]
             }
         }
-        return Tensor.fromBlob(floatBuffer, longArrayOf(1, 3, 224, 224))
+
+        // Create and return the Tensor
+        return Tensor.fromBlob(floatArray, longArrayOf(1, 3, 224, 224))
     }
 
     private fun getClassFromOutput(output: FloatArray): String {

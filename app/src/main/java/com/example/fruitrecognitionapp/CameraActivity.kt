@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.camera.core.Camera
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -15,12 +14,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.AspectRatio
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCapture.OutputFileOptions
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -38,17 +32,11 @@ class CameraActivity : AppCompatActivity() {
         CameraLayoutBinding.inflate(layoutInflater)
     }
 
-
     private val multiplePermissionId = 14
     private val multiplePermissionNameList = if (Build.VERSION.SDK_INT >= 33) {
-        arrayListOf(
-            Manifest.permission.CAMERA,
-        )
+        arrayListOf(Manifest.permission.CAMERA)
     } else {
-        arrayListOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+        arrayListOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     private lateinit var imageCapture: ImageCapture
@@ -67,46 +55,50 @@ class CameraActivity : AppCompatActivity() {
             // Create an Intent to open the local image picker
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*" // Filter for images only
-            startActivityForResult(intent, requestCode = 100) // 100 is the request code
+            startActivityForResult(intent, 100) // 100 is the request code
         }
 
         if (checkMultiplePermission()) {
             startCamera()
         }
-        mainBinding.shotCameraIB.setOnClickListener{
+
+        mainBinding.shotCameraIB.setOnClickListener {
             takePhoto()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (checkMultiplePermission()) {
+            startCamera()
+        }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        cameraProvider.unbindAll()  // Unbind the camera when the activity is paused
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraProvider.unbindAll()  // Unbind the camera when the activity is destroyed
+    }
 
     private fun checkMultiplePermission(): Boolean {
         val listPermissionNeeded = arrayListOf<String>()
         for (permission in multiplePermissionNameList) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 listPermissionNeeded.add(permission)
             }
         }
         if (listPermissionNeeded.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                listPermissionNeeded.toTypedArray(),
-                multiplePermissionId
-            )
+            ActivityCompat.requestPermissions(this, listPermissionNeeded.toTypedArray(), multiplePermissionId)
             return false
         }
         return true
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray,
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (requestCode == multiplePermissionId) {
@@ -118,43 +110,30 @@ class CameraActivity : AppCompatActivity() {
                     }
                 }
                 if (isGrant) {
-                    // here all permission granted successfully
                     startCamera()
                 } else {
                     var someDenied = false
                     for (permission in permissions) {
-                        if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                                this,
-                                permission
-                            )
-                        ) {
-                            if (ActivityCompat.checkSelfPermission(
-                                    this,
-                                    permission
-                                ) == PackageManager.PERMISSION_DENIED
-                            ) {
+                        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                            if (ActivityCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_DENIED) {
                                 someDenied = true
                             }
                         }
                     }
                     if (someDenied) {
-                        // here app Setting open because all permission is not granted
-                        // and permanent denied
-                        appSettingOpen(this)
+                        appSettingOpen(this)  // Open app settings if permission is permanently denied
                     } else {
-                        // here warning permission show
                         warningPermissionDialog(this) { _: DialogInterface, which: Int ->
-                            when (which) {
-                                DialogInterface.BUTTON_POSITIVE ->
-                                    checkMultiplePermission()
+                            if (which == DialogInterface.BUTTON_POSITIVE) {
+                                checkMultiplePermission()
                             }
                         }
                     }
                 }
             }
         }
-
     }
+
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
@@ -173,19 +152,11 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun bindCameraUserCases() {
-        val screenAspectRatio = aspectRatio(
-            mainBinding.previewView.width,
-            mainBinding.previewView.height
-        )
+        val screenAspectRatio = aspectRatio(mainBinding.previewView.width, mainBinding.previewView.height)
         val rotation = mainBinding.previewView.display.rotation
 
         val resolutionSelector = ResolutionSelector.Builder()
-            .setAspectRatioStrategy(
-                AspectRatioStrategy(
-                    screenAspectRatio,
-                    AspectRatioStrategy.FALLBACK_RULE_AUTO
-                )
-            )
+            .setAspectRatioStrategy(AspectRatioStrategy(screenAspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO))
             .build()
 
         val preview = Preview.Builder()
@@ -207,21 +178,16 @@ class CameraActivity : AppCompatActivity() {
             .build()
 
         try {
-            cameraProvider.unbindAll()
-
-            camera = cameraProvider.bindToLifecycle(
-                this, cameraSelector, preview, imageCapture
-            )
-        } catch (e:Exception){
+            cameraProvider.unbindAll()  // Unbind previous use cases
+            camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     private fun takePhoto() {
-        val imageFolder = File (
-            Environment.DIRECTORY_PICTURES, "Images"
-        )
-        if (!imageFolder.exists()){
+        val imageFolder = File(Environment.DIRECTORY_PICTURES, "Images")
+        if (!imageFolder.exists()) {
             imageFolder.mkdir()
         }
 
@@ -229,63 +195,52 @@ class CameraActivity : AppCompatActivity() {
             .format(System.currentTimeMillis()) + ".jpg"
 
         val contentValues = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME,fileName)
-            put(MediaStore.Images.Media.MIME_TYPE,"image/jpeg")
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P){
-                put(MediaStore.Images.Media.RELATIVE_PATH,"Pictures/Images")
+            put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Images")
             }
         }
-        val outputOption =
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                OutputFileOptions.Builder(
-                    contentResolver,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    contentValues
-                ).build()
-            } else {
-                val imageFile = File(imageFolder, fileName)
-                OutputFileOptions.Builder(imageFile).build()
-            }
-        imageCapture.takePicture(
-            outputOption,
-            ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    val message = "Photo Captured Successfully: ${outputFileResults.savedUri}"
-                    Toast.makeText(
-                        this@CameraActivity,
-                        message,
-                        Toast.LENGTH_LONG
-                    ).show()
+        val outputOption = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            ImageCapture.OutputFileOptions.Builder(
+                contentResolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues
+            ).build()
+        } else {
+            val imageFile = File(imageFolder, fileName)
+            ImageCapture.OutputFileOptions.Builder(imageFile).build()
+        }
 
-                    processImage("selectedImageUri", outputFileResults.savedUri)
-                }
+        imageCapture.takePicture(outputOption, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
+            override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                val message = "Photo Captured Successfully: ${outputFileResults.savedUri}"
+                Toast.makeText(this@CameraActivity, message, Toast.LENGTH_LONG).show()
 
-                override fun onError(exception: ImageCaptureException) {
-                    Toast.makeText(
-                        this@CameraActivity,
-                        exception.message.toString(),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                processImage("selectedImageUri", outputFileResults.savedUri)
             }
-        )
+
+            override fun onError(exception: ImageCaptureException) {
+                Toast.makeText(this@CameraActivity, exception.message.toString(), Toast.LENGTH_LONG).show()
+            }
+        })
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 100 && resultCode == RESULT_OK) {
             val selectedImageUri = data?.data
             if (selectedImageUri != null) {
-                processImage("selectedImageUri",selectedImageUri)
+                processImage("selectedImageUri", selectedImageUri)
             } else {
                 Toast.makeText(this, "Failed to select image", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    //passes selected or captured image into the trained model
-    private fun processImage(imageName : String, uri : Uri?) {
+    // Passes selected or captured image into the trained model
+    private fun processImage(imageName: String, uri: Uri?) {
         val intent = Intent(this@CameraActivity, FruitDetailsActivity::class.java)
         intent.putExtra(imageName, uri.toString())
         startActivity(intent)
