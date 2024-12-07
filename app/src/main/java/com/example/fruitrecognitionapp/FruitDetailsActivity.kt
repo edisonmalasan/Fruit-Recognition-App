@@ -134,7 +134,7 @@ class FruitDetailsActivity : AppCompatActivity() {
     private fun assetFilePath(assetName: String): String {
         val file = File(cacheDir, assetName)
 
-        // Log the file path before attempting to copy
+        // log the file path before attempting to copy
         Log.d("FruitDetailsActivity", "Model file path: ${file.absolutePath}")
 
         if (!file.exists()) {
