@@ -47,10 +47,10 @@ class FruitDetailsActivity : AppCompatActivity() {
             try {
                 // Display the image using Picasso
                 Picasso.get()
-                    .load(selectedImageUri) // URI of the selected image
-                    .placeholder(R.drawable.placeholder_image) // Placeholder image while loading
-                    .error(R.drawable.error_image)             // Error image if loading fails
-                    .into(fruitImageView)                      // The ImageView to load into
+                    .load(selectedImageUri)
+                    .placeholder(R.drawable.placeholder_image)
+                    .error(R.drawable.error_image)
+                    .into(fruitImageView)
 
                 // Predict the fruit based on the selected image
                 predictFruit(Uri.parse(selectedImageUri))
@@ -120,21 +120,18 @@ class FruitDetailsActivity : AppCompatActivity() {
                 floatBuffer.put((b / 255.0f - mean[2]) / std[2])
             }
         }
-        return Tensor.fromBlob(floatBuffer, longArrayOf(1, 3, 224, 224))  // Channels-first format
+        return Tensor.fromBlob(floatBuffer, longArrayOf(1, 3, 224, 224))
     }
 
     private fun getClassFromOutput(output: FloatArray): String {
         val maxIndex = output.indices.maxByOrNull { output[it] } ?: -1
         val classNames = listOf("Apple", "Banana", "Bell Pepper", "Chilli Pepper", "Corn", "Eggplant", "Grapes", "Jalapeno", "Kiwi",
-            "Lemon", "Mango", "Onion", "Orange", "Paprika", "Pear", "Pineapple", "Pomegranate", "Sweetcorn", "Tomato", "Watermelon") // Adjust this based on your model's classes
+            "Lemon", "Mango", "Onion", "Orange", "Paprika", "Pear", "Pineapple", "Pomegranate", "Sweetcorn", "Tomato", "Watermelon")
         return if (maxIndex != -1) classNames[maxIndex] else "Unknown"
     }
 
     private fun assetFilePath(assetName: String): String {
         val file = File(cacheDir, assetName)
-
-        // log the file path before attempting to copy
-        Log.d("FruitDetailsActivity", "Model file path: ${file.absolutePath}")
 
         if (!file.exists()) {
             try {
@@ -143,10 +140,8 @@ class FruitDetailsActivity : AppCompatActivity() {
                         inputStream.copyTo(outputStream)
                     }
                 }
-                Log.d("FruitDetailsActivity", "Model file copied to cache: ${file.absolutePath}")
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.e("FruitDetailsActivity", "Failed to copy model file: ${e.message}")
                 Toast.makeText(this, "Error loading model", Toast.LENGTH_SHORT).show()
             }
         }

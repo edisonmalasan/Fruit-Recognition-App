@@ -271,16 +271,16 @@ class CameraActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            // get IMAGE
-            val selectedImageUri = data.data
-
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            val selectedImageUri = data?.data
             if (selectedImageUri != null) {
-                // Create an intent to navigate to FruitDetailsActivity
                 val intent = Intent(this, FruitDetailsActivity::class.java)
-                intent.putExtra("imageUri", selectedImageUri.toString()) // pass the image
+                intent.putExtra("selectedImageUri", selectedImageUri.toString())
                 startActivity(intent)
+            } else {
+                Toast.makeText(this, "Failed to select image", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 }
