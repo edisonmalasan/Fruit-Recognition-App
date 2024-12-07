@@ -14,7 +14,6 @@ import org.pytorch.IValue
 import org.pytorch.Module
 import org.pytorch.Tensor
 import java.io.File
-import java.io.InputStream
 import java.nio.FloatBuffer
 
 class FruitDetailsActivity : AppCompatActivity() {
