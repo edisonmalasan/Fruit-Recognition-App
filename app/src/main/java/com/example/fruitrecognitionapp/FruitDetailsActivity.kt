@@ -32,7 +32,7 @@ class FruitDetailsActivity : AppCompatActivity() {
 
         // Load the pre-trained model from assets
         try {
-            model = Module.load(assetFilePath("Fruit_Recognition_Entire_Model.pth"))
+            model = Module.load(assetFilePath("IdentiFruit.pt"))  // Ensure correct extension
         } catch (e: Exception) {
             Log.e("FruitDetailsActivity", "Model loading failed: ${e.message}")
             e.printStackTrace()
@@ -120,7 +120,7 @@ class FruitDetailsActivity : AppCompatActivity() {
                 floatBuffer.put((b / 255.0f - mean[2]) / std[2])
             }
         }
-        return Tensor.fromBlob(floatBuffer, longArrayOf(1, 3, 224, 224))
+        return Tensor.fromBlob(floatBuffer, longArrayOf(1, 3, 224, 224))  // Channels-first format
     }
 
     private fun getClassFromOutput(output: FloatArray): String {
