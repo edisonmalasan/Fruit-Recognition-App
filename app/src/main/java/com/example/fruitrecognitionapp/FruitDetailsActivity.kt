@@ -14,6 +14,7 @@ import org.pytorch.IValue
 import org.pytorch.Module
 import org.pytorch.Tensor
 import java.io.File
+import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 
 class FruitDetailsActivity : AppCompatActivity() {
@@ -92,8 +93,20 @@ class FruitDetailsActivity : AppCompatActivity() {
 
     private fun loadImageFromUri(imageUri: Uri): Bitmap? {
         return try {
+
+            //This fixes this error: Data buffer must be direct (java.nio.ByteBuffer#allocateDirect)
             contentResolver.openInputStream(imageUri)?.use { inputStream ->
-                BitmapFactory.decodeStream(inputStream)
+                // Allocate a direct byte buffer
+                val buffer = ByteBuffer.allocateDirect(inputStream.available())
+                // Read the image data into the buffer
+                inputStream.read(buffer.array())
+                // Flip the buffer to prepare for decoding
+                buffer.flip()
+                // Decode the image from the buffer
+                BitmapFactory.decodeByteArray(buffer.array(), 0, buffer.limit())
+            } ?: run {
+                Toast.makeText(this, "Error loading image: InputStream is null", Toast.LENGTH_SHORT).show()
+                null
             }
         } catch (e: Exception) {
             e.printStackTrace()
