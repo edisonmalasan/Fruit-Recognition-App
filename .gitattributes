@@ -1,3 +1,4 @@
 Fruit_Recognition_Entire_Model.pth filter=lfs diff=lfs merge=lfs -text
 *.pth filter=lfs diff=lfs merge=lfs -text
 app/src/main/assets/IdentiFruit.pt filter=lfs diff=lfs merge=lfs -text
+IdentiFruit.pt filter=lfs diff=lfs merge=lfs -text
