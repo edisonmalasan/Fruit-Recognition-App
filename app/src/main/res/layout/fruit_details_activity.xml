@@ -5,21 +5,20 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- ImageView to display the photo -->
     <ImageView
         android:id="@+id/fruitImageView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
-        android:contentDescription="Fruit Image"/>
+        android:contentDescription="Fruit Image" />
 
-    <!-- TextView to display the prediction result -->
     <TextView
         android:id="@+id/predictionResultTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Prediction Result"
         android:textSize="18sp"
-        android:paddingTop="16dp"/>
+        android:gravity="center"
+        android:paddingTop="16dp" />
 
 </LinearLayout>

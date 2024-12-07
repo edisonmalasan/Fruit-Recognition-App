@@ -37,6 +37,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    buildToolsVersion = "34.0.0"
 }
 
 dependencies {
@@ -61,9 +62,10 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-    // dependecies for pytorch
+// Dependencies for Fruit Details Activity
     implementation ("com.squareup.picasso:picasso:2.8")
-    implementation ("org.pytorch:pytorch_android:1.12.0")
-    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("org.pytorch:pytorch_android:2.1.0")
+    implementation ("org.pytorch:pytorch_android_torchvision:2.1.0")
+
 
 }

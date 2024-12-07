@@ -272,14 +272,14 @@ class CameraActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 100 && resultCode == RESULT_OK && data != null) {
-            // Get the URI of the selected image
+            // get IMAGE
             val selectedImageUri = data.data
 
-            // Perform any action with the selected image, like displaying it in an ImageView
             if (selectedImageUri != null) {
-                // Example: Displaying the image in an ImageView
-                val imageView: ImageView = findViewById(R.id.local_imageIB) // Ensure this ImageView exists in your layout
-                imageView.setImageURI(selectedImageUri)
+                // Create an intent to navigate to FruitDetailsActivity
+                val intent = Intent(this, FruitDetailsActivity::class.java)
+                intent.putExtra("imageUri", selectedImageUri.toString()) // pass the image
+                startActivity(intent)
             }
         }
     }
