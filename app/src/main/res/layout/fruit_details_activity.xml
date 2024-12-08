@@ -41,45 +41,63 @@
             android:textSize="30sp"
             android:layout_marginTop="20dp" />
 
-        <TextView
-            android:id="@+id/nutrition_facts"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gilroy_bold"
-            android:gravity="start"
-            android:textColor="@color/white"
-            android:text="Nutritional Value"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp" />
+            android:background="@drawable/bg_green_box"
+            android:orientation="vertical"
+            android:elevation="10dp"
+            android:layout_marginVertical="10dp">
+            <TextView
+                android:id="@+id/nutrition_facts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gilroy_bold"
+                android:gravity="start"
+                android:textColor="@color/white"
+                android:text="Nutritional Value"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nutritionRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            tools:listitem="@layout/list_item"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/nutritionRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                tools:listitem="@layout/list_item"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/health_benefits"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Health Benefits"
-            android:textColor="@color/white"
-            android:fontFamily="@font/gilroy_bold"
-            android:textSize="16sp"
-            android:layout_marginStart="20dp" />
+            android:orientation="vertical"
+            android:background="@drawable/bg_green_box"
+            android:elevation="10dp"
+            android:layout_marginVertical="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/healthRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            tools:listitem="@layout/list_item"/>
+            <TextView
+                android:id="@+id/health_benefits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Health Benefits"
+                android:textColor="@color/white"
+                android:fontFamily="@font/gilroy_bold"
+                android:textSize="16sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/healthRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                tools:listitem="@layout/list_item"/>
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
