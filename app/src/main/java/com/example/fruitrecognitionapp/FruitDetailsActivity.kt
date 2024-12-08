@@ -23,7 +23,6 @@ class FruitDetailsActivity : AppCompatActivity() {
     private lateinit var fruitImageView: ImageView
     private lateinit var predictionResultTextView: TextView
     private lateinit var model: Module
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fruit_details_activity)

@@ -244,5 +244,6 @@ class CameraActivity : AppCompatActivity() {
         val intent = Intent(this@CameraActivity, FruitDetailsActivity::class.java)
         intent.putExtra(imageName, uri.toString())
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_static)
     }
 }
