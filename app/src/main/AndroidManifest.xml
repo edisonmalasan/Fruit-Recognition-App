@@ -35,5 +35,6 @@
             android:name=".FruitDetailsActivity"
             android:exported="false" >
         </activity>
+        <activity android:name=".GreetingActivity"/>
     </application>
 </manifest>
