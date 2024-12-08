@@ -57,12 +57,12 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginRight="60dp"
-        android:layout_marginTop="775dp"
+        android:layout_marginTop="640dp"
         android:layout_toLeftOf="@+id/shot_cameraIB"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:scaleType="centerCrop"
-        android:src="@drawable/local_image"
-        app:tint="@color/white" />
+        android:src="@drawable/gallery"
+        app:tint="@color/orange" />
 
     <ImageButton
         android:id="@+id/arrow_backIB"
