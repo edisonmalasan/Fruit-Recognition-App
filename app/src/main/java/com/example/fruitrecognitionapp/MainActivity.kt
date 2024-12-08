@@ -1,6 +1,7 @@
 package com.example.fruitrecognitionapp
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,15 +11,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import android.content.SharedPreferences
 import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        lifecycleScope.launch{
-            delay(3000)
+        lifecycleScope.launch {
+            delay(3000) // Optional delay for splash screen
         }
         installSplashScreen()
         setContentView(R.layout.activity_main)
@@ -28,18 +28,24 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val sharedPreferences: SharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-        val isFirstRun = sharedPreferences.getBoolean("isFirstRun", true)
+        val sharedPreferences: SharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val isFirstLaunch = sharedPreferences.getBoolean("isFirstLaunch", true)
 
-        if (isFirstRun){
-            setContentView(R.layout.activity_main)
+        if (isFirstLaunch) {
+            // Automatically go to GreetingActivity on first launch
+            val intent = Intent(this, GreetingActivity::class.java)
+            startActivity(intent)
+            finish()
+            sharedPreferences.edit().putBoolean("isFirstLaunch", false).apply()
+        } else {
+            // Go directly to CameraActivity for subsequent launches
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
-            val openCam = findViewById<Button>(R.id.open_cam)
-            openCam.setOnClickListener{
-                val intent = Intent(this, CameraActivity::class.java)
-                startActivity(intent)
-            }
-        }else{
+        val openCameraButton: Button = findViewById(R.id.open_cam)
+        openCameraButton.setOnClickListener {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
             finish()

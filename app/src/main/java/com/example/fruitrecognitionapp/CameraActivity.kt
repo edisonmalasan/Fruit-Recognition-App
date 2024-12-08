@@ -20,10 +20,14 @@ import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.fruitrecognitionapp.databinding.CameraLayoutBinding
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
 class CameraActivity : AppCompatActivity() {
@@ -65,6 +69,19 @@ class CameraActivity : AppCompatActivity() {
         mainBinding.shotCameraIB.setOnClickListener {
             takePhoto()
         }
+        scheduleNotificationWorker()
+    }
+
+    private fun scheduleNotificationWorker() {
+        val periodicWorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(
+            1, TimeUnit.HOURS // Run every hour
+        ).build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "NotificationWorker",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            periodicWorkRequest
+        )
     }
 
     override fun onResume() {

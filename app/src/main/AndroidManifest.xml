@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -7,6 +6,7 @@
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -21,8 +21,6 @@
         tools:targetApi="31">
 
         <!-- Main Launcher Activity -->
-        <activity android:name=".CameraActivity"/>
-
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -30,11 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".GreetingActivity"
+            android:exported="true" />
+
+        <activity android:name=".CameraActivity"
+            android:exported="true" />
+
         <!-- FruitDetailsActivity Declaration -->
         <activity
             android:name=".FruitDetailsActivity"
-            android:exported="false" >
-        </activity>
-        <activity android:name=".GreetingActivity"/>
+            android:exported="false" />
     </application>
 </manifest>
