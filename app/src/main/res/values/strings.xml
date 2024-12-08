@@ -14,7 +14,7 @@
     <string name="team_lemar">© Team LEMAR</string>
     <string name="disclaimer">This image classification model was trained using PyTorch.</string>
     <string name="fruit_image">Fruit Image</string>
-    <string name="prediction_result">Prediction Result</string>
+    <string name="prediction_result">Your Fruit: </string>
     <string name="app_desc">Identify your fruits with their nutritional values!</string>
     <string name="name">IdentiFruit</string>
     <string name="clipboard_desc">Display nutritional facts and health benefits of the fruit scanned</string>

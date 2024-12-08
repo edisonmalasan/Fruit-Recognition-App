@@ -1,5 +1,6 @@
 package com.example.fruitrecognitionapp
 
+import NutritionAdapter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -9,20 +10,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 import com.squareup.picasso.Picasso
 import org.pytorch.IValue
 import org.pytorch.Module
 import org.pytorch.Tensor
 import java.io.File
 import java.io.InputStream
-import java.nio.ByteBuffer
-import java.nio.FloatBuffer
 
 class FruitDetailsActivity : AppCompatActivity() {
 
     private lateinit var fruitImageView: ImageView
     private lateinit var predictionResultTextView: TextView
     private lateinit var model: Module
+    private lateinit var nutritionRecyclerView: RecyclerView
+    private lateinit var healthRecyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fruit_details_activity)
@@ -30,6 +35,11 @@ class FruitDetailsActivity : AppCompatActivity() {
         // Initialize views
         fruitImageView = findViewById(R.id.fruitImageView)
         predictionResultTextView = findViewById(R.id.predictionResultTextView)
+
+        nutritionRecyclerView = findViewById(R.id.nutritionRecyclerView)
+        healthRecyclerView = findViewById(R.id.healthRecyclerView)
+        nutritionRecyclerView.layoutManager = LinearLayoutManager(this)
+        healthRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // Load the pre-trained model from assets
         try {
@@ -63,6 +73,8 @@ class FruitDetailsActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "No image provided", Toast.LENGTH_SHORT).show()
         }
+
+        fetchFruitData("banana")
     }
 
     private fun predictFruit(imageUri: Uri) {
@@ -87,6 +99,9 @@ class FruitDetailsActivity : AppCompatActivity() {
 
             // Display the result
             predictionResultTextView.text = "Predicted Fruit: $predictedClass"
+
+            // Fetch fruit data from Firebase
+            fetchFruitData(predictedClass)
         } else {
             Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
         }
@@ -96,7 +111,6 @@ class FruitDetailsActivity : AppCompatActivity() {
         return try {
             val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
             if (inputStream != null) {
-                // Read the image into a Bitmap
                 BitmapFactory.decodeStream(inputStream)
             } else {
                 Toast.makeText(this, "Error loading image: InputStream is null", Toast.LENGTH_SHORT).show()
@@ -161,4 +175,46 @@ class FruitDetailsActivity : AppCompatActivity() {
         }
         return file.absolutePath
     }
+
+    private fun fetchFruitData(name: String) {
+        val database = FirebaseDatabase.getInstance().getReference("fruits").child(name)
+
+        database.get().addOnSuccessListener { data ->
+            if (data.exists()) {
+                Log.d("FruitDetailsActivity", "Data exists for $name")
+                val nutritionalValues = mutableListOf<ListItem>()
+                val healthBenefits = mutableListOf<ListItem>()
+
+                val nutritionalData = data.child("nutritional_content")
+                nutritionalData.children.forEach {
+                    nutritionalValues.add(ListItem(it.value.toString()))
+                }
+
+                val healthBenefitsData = data.child("health_benefits")
+                healthBenefitsData.children.forEach {
+                    healthBenefits.add(ListItem(it.value.toString()))
+                }
+
+                updateUI(nutritionalValues, healthBenefits)
+            } else {
+                Log.d("FruitDetailsActivity", "No data found for $name")
+                Toast.makeText(this, "No data found for $name", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener { e ->
+            Log.e("FruitDetailsActivity", "Error fetching data: ${e.message}")
+            Toast.makeText(this, "Error fetching fruit data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun updateUI(nutritionalValues: List<ListItem>, healthBenefits: List<ListItem>) {
+        Log.d("FruitDetailsActivity", "Updating UI with nutritional and health data.")
+
+        val nutritionAdapter = NutritionAdapter(nutritionalValues)
+        nutritionRecyclerView.adapter = nutritionAdapter
+
+        val healthAdapter = NutritionAdapter(healthBenefits)
+        healthRecyclerView.adapter = healthAdapter
+    }
+
 }
