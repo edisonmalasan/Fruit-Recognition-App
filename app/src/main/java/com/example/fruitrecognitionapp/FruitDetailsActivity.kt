@@ -27,6 +27,7 @@ class FruitDetailsActivity : AppCompatActivity() {
     private lateinit var model: Module
     private lateinit var nutritionRecyclerView: RecyclerView
     private lateinit var healthRecyclerView: RecyclerView
+    private lateinit var predictedClass: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +75,9 @@ class FruitDetailsActivity : AppCompatActivity() {
             Toast.makeText(this, "No image provided", Toast.LENGTH_SHORT).show()
         }
 
-        fetchFruitData("banana")
+        val fruitName = findViewById<TextView>(R.id.fruit)
+        fruitName.text = predictedClass
+        fetchFruitData(fruitName.toString())
     }
 
     private fun predictFruit(imageUri: Uri) {
@@ -95,7 +98,7 @@ class FruitDetailsActivity : AppCompatActivity() {
 
             // Get prediction result
             val result = outputTensor.dataAsFloatArray
-            val predictedClass = getClassFromOutput(result)
+            predictedClass = getClassFromOutput(result)
 
             // Display the result
             predictionResultTextView.text = "Predicted Fruit: $predictedClass"
