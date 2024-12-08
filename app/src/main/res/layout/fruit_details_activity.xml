@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
-        android:contentDescription="Fruit Image" />
+        android:contentDescription="@string/fruit_image" />
 
     <TextView
         android:id="@+id/predictionResultTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prediction Result"
+        android:text="@string/prediction_result"
         android:textSize="18sp"
         android:gravity="center"
         android:paddingTop="16dp" />
