@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -66,6 +67,8 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("org.pytorch:pytorch_android:2.1.0")
     implementation ("org.pytorch:pytorch_android_torchvision:2.1.0")
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
 
 }
