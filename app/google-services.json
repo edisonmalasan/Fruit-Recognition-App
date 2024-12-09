@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "220693643515",
+    "firebase_url": "https://identifruit-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "identifruit",
+    "storage_bucket": "identifruit.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220693643515:android:ec225bf2e897dc259e705e",
+        "android_client_info": {
+          "package_name": "com.example.fruitrecognitionapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGkto-KDPzh6VSFq-7xDhuF0lwm3GShYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
