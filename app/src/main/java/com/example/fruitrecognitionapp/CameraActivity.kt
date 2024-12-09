@@ -59,7 +59,7 @@ class CameraActivity : AppCompatActivity() {
             // Create an Intent to open the local image picker
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*" // Filter for images only
-            startActivityForResult(intent, 100) // 100 is the request code
+            startActivityForResult(intent, requestCode=100) // 100 is the request code
         }
 
         if (checkMultiplePermission()) {

@@ -77,7 +77,7 @@ class FruitDetailsActivity : AppCompatActivity() {
 
         val fruitName = findViewById<TextView>(R.id.fruit)
         fruitName.text = predictedClass
-        fetchFruitData(fruitName.toString())
+        fetchFruitData(fruitName.text.toString())
     }
 
     private fun predictFruit(imageUri: Uri) {
@@ -104,7 +104,7 @@ class FruitDetailsActivity : AppCompatActivity() {
             predictionResultTextView.text = "Predicted Fruit: $predictedClass"
 
             // Fetch fruit data from Firebase
-            fetchFruitData(predictedClass)
+            fetchFruitData(predictedClass.lowercase())
         } else {
             Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
         }
