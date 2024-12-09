@@ -29,7 +29,7 @@ class GreetingActivity : AppCompatActivity() {
                     database.child(userID).setValue(user).addOnSuccessListener {
                         Toast.makeText(this, "User added successfully!", Toast.LENGTH_SHORT).show()
                         // After adding the user, navigate to MainActivity
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, LandingPageActivity::class.java)
                         startActivity(intent)
                         finish()
                     }.addOnFailureListener {

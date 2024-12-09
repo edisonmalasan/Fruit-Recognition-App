@@ -11,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import android.widget.Button
+import com.google.android.material.navigation.NavigationBarView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
             delay(3000) // Optional delay for splash screen
         }
         installSplashScreen()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        setContentView(R.layout.landing_page)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.landing_page)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -39,16 +39,10 @@ class MainActivity : AppCompatActivity() {
             sharedPreferences.edit().putBoolean("isFirstLaunch", false).apply()
         } else {
             // Go directly to CameraActivity for subsequent launches
-            val intent = Intent(this, CameraActivity::class.java)
+            val intent = Intent(this, LandingPageActivity::class.java)
             startActivity(intent)
             finish()
         }
 
-        val openCameraButton: Button = findViewById(R.id.open_cam)
-        openCameraButton.setOnClickListener {
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 }
