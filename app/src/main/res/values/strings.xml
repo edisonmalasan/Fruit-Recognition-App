@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Strawberry Ripeness Detection App</string>
+    <string name="app_name">IdentiFruit</string>
     <string name="enter_text">Enter text</string>
     <string name="logo_desc">App Logo</string>
     <string name="welcome_message">Welcome to our Strawberry Ripeness Detection App!</string>
