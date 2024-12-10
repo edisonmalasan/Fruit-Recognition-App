@@ -43,7 +43,19 @@ class NotificationWorker(context: Context, workerParams: WorkerParameters) : Wor
             "Trivia" -> listOf(
                 "Did you know? Bananas are berries, but strawberries are not!",
                 "An apple a day keeps the doctor away, but did you know it also floats on water?",
-                "Tomatoes are fruits, but legally classified as vegetables in the US!"
+                "Tomatoes are fruits, but legally classified as vegetables in the US!",
+                "Coconuts aren’t actually nuts — they’re considered a drupe, which is a type of fruit with a hard outer shell and a seed inside!",
+                "Lemons are not only a fruit, but they’re also natural disinfectants and can be used as a cleaning agent!",
+                "Did you know? A single apple tree can produce up to 2,000 apples in a single year!",
+                "Kiwis are actually a berry, and they were originally called \"Chinese gooseberries!\"",
+                "Did you know? Pineapples were once so rare and expensive that they were used as a symbol of wealth and hospitality!",
+                "Did you know? Bananas are berries, but strawberries are not!",
+                "A banana tree is technically an herb, not a tree!",
+                "Did you know? The smallest fruit in the world is the \"Wolffia,\" also called watermeal?",
+                "Did you know? Mangoes are the only fruit that ripen from the outside in.",
+                "Did you know? The fig tree is one of the first trees cultivated by humans.",
+                "The world’s most expensive fruit is the \"Yubari King\" melon from Japan.",
+                "Did you know? Mangoes are the only fruit that ripen from the outside in."
             ).random()
 
             else -> "Hello! This is your friendly notification."
