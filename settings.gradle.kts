@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Strawberry Ripeness Detection App"
+rootProject.name = "IdentiFruit"
 include(":app")
