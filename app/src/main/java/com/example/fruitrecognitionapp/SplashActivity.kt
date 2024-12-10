@@ -14,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
 
         // Delay for 3 seconds before navigating to the main activity
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, LandingPageActivity::class.java))
             finish()  // Ensures the splash screen is removed from the back stack
         }, 3000)  // 3000 milliseconds = 3 seconds
     }
