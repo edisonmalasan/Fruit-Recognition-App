@@ -44,7 +44,7 @@ class FruitDetailsActivity : AppCompatActivity() {
 
         // load the model
         try {
-            val modelFilePath = assetFilePath("Fruit_Recognition_Model_Scripted_cpu.pt")
+            val modelFilePath = assetFilePath("IdentiFruit_Model_cpu.pt")
             Log.d("FruitDetailsActivity", "Model file path: $modelFilePath, Exists: ${File(modelFilePath).exists()}")
 
             model = Module.load(modelFilePath)  // Ensure correct extension
@@ -89,10 +89,10 @@ class FruitDetailsActivity : AppCompatActivity() {
         val image = loadImageFromUri(imageUri)
 
         if (image != null) {
-            // Preprocess the image for the model
+            // preProcess the Uri  image
             val inputTensor = preprocessImage(image)
 
-            // Perform inference
+            // perform inference to the model
             val outputTensor = try {
                 model.forward(IValue.from(inputTensor)).toTensor()
             } catch (e: Exception) {
@@ -105,10 +105,10 @@ class FruitDetailsActivity : AppCompatActivity() {
             val result = outputTensor.dataAsFloatArray
             predictedClass = getClassFromOutput(result)
 
-            // Display the result
+            // display the result
             predictionResultTextView.text = "Predicted Fruit: $predictedClass"
 
-            // Fetch fruit data from Firebase
+            // fetch fruit data from firebase
             fetchFruitData(predictedClass.lowercase())
         } else {
             Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show()
@@ -131,6 +131,7 @@ class FruitDetailsActivity : AppCompatActivity() {
         }
     }
 
+    // WAG NYO TANGGALIN TO PARA MABALIKAN ANG MISTAKES
 //    private fun preprocessImage(image: Bitmap): Tensor {
 //        // Resize to 256x256 first
 //        val resizedImage = Bitmap.createScaledBitmap(image, 256, 256, true)
@@ -211,9 +212,22 @@ class FruitDetailsActivity : AppCompatActivity() {
 
     private fun getClassFromOutput(output: FloatArray): String {
         val maxIndex = output.indices.maxByOrNull { output[it] } ?: -1
-        val classNames = listOf("Apple", "Banana", "Bell Pepper", "Chilli Pepper", "Corn", "Eggplant", "Grapes", "Jalapeno", "Kiwi",
-            "Lemon", "Mango", "Onion", "Orange", "Paprika", "Pear", "Pineapple", "Pomegranate", "Sweetcorn", "Tomato", "Watermelon")
-        return if (maxIndex != -1) classNames[maxIndex] else "Unknown"
+        if (maxIndex == -1) return "Unknown"
+
+        val confidence = output[maxIndex] * 100
+        Log.d("FruitDetailsActivity", "Confidence: $confidence%")
+
+        if (confidence < 200) { // 200 or 225
+            return "Unknown"
+        }
+
+        // list of dataset that was used in training the model
+        val classNames = listOf(
+            "Apple", "Banana", "Bell Pepper", "Chilli Pepper", "Corn", "Eggplant",
+            "Grapes", "Jalapeno", "Kiwi", "Lemon", "Mango", "Onion", "Orange",
+            "Paprika", "Pear", "Pineapple", "Pomegranate", "Sweetcorn", "Tomato", "Watermelon"
+        )
+        return classNames[maxIndex]
     }
 
     private fun assetFilePath(assetName: String): String {
