@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.Image
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -62,6 +63,14 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(mainBinding.root)
+
+        val backButton : ImageButton = findViewById(R.id.backBtn)
+
+        backButton.setOnClickListener{
+            val intent = Intent(this, LandingPageActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val localImageButton: ImageButton = findViewById(R.id.local_imageIB)
 

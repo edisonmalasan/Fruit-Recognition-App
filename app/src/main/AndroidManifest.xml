@@ -26,15 +26,16 @@
             android:exported="false" />
         <activity
             android:name=".LandingPageActivity"
-            android:exported="false" /> <!-- Main Launcher Activity -->
+            android:exported="true"
+            android:launchMode="standard">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity><!-- Main Launcher Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".GreetingActivity"
