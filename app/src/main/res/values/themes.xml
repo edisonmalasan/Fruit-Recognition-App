@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.FruitRecognitionApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.FruitRecognitionApp" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:statusBarColor">@color/orange</item>
@@ -13,4 +13,9 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash_logomdpi</item>
         <item name="postSplashScreenTheme">@style/Base.Theme.FruitRecognitionApp</item>
     </style>
+
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/lightGreen</item>
+    </style>
+
 </resources>
