@@ -38,8 +38,6 @@
         android:layout_marginStart="50dp"
         app:tint="@color/white" />
 
-
-
     <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:background="@color/orange"
