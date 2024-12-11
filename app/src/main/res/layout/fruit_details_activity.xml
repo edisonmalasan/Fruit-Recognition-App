@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Fruit Details Activity -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,18 +9,19 @@
     tools:context=".FruitDetailsActivity"
     android:background="@color/green">
 
+    <!-- Fruit Details Layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <!-- Fruit Image -->
         <ImageView
             android:id="@+id/fruitImageView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/fruit_image" />
-
+        <!-- Fruit Name -->
         <TextView
             android:id="@+id/predictionResultTextView"
             android:layout_width="match_parent"
@@ -29,7 +32,7 @@
             android:gravity="center"
             android:paddingTop="16dp"
             android:fontFamily="@font/gilroy_bold" />
-
+        <!-- Fruit Name -->
         <TextView
             android:id="@+id/fruit"
             android:layout_width="match_parent"
@@ -41,6 +44,7 @@
             android:textSize="30sp"
             android:layout_marginTop="20dp" />
 
+        <!--Background Image-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +52,8 @@
             android:orientation="vertical"
             android:elevation="10dp"
             android:layout_marginVertical="10dp">
+
+            <!--View Nutritional Facts-->
             <TextView
                 android:id="@+id/nutrition_facts"
                 android:layout_width="match_parent"
@@ -60,6 +66,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp" />
 
+            <!--Nutrition Facts RecyclerView-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/nutritionRecyclerView"
                 android:layout_width="match_parent"
@@ -70,6 +77,7 @@
                 tools:listitem="@layout/list_item"/>
         </LinearLayout>
 
+        <!--Background Image-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +85,7 @@
             android:background="@drawable/bg_green_box"
             android:elevation="10dp"
             android:layout_marginVertical="10dp">
-
+        <!--View Health Benefits-->
             <TextView
                 android:id="@+id/health_benefits"
                 android:layout_width="match_parent"
@@ -88,7 +96,7 @@
                 android:textSize="16sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"/>
-
+        <!--Health Benefits RecyclerView-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/healthRecyclerView"
                 android:layout_width="match_parent"
@@ -98,6 +106,5 @@
                 android:layout_marginBottom="20dp"
                 tools:listitem="@layout/list_item"/>
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

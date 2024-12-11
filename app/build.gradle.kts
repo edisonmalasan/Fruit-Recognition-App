@@ -73,6 +73,7 @@ dependencies {
 
 
     implementation("com.google.android.material:material:1.9.0")
+    implementation(libs.androidx.material3.v131)
     implementation("androidx.work:work-runtime:2.8.0")
 
 }

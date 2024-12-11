@@ -22,4 +22,6 @@
     <string name="enter_name">Enter your name!</string>
     <string name="user_name_field">input field for user name</string>
     <string name="get_started">Get Started!</string>
+    <string name="camera_view">Camera View</string>
+    <string name="IdentiFruit" />
 </resources>

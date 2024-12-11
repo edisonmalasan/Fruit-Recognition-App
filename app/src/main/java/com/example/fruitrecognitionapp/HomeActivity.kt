@@ -11,35 +11,38 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
+import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.camera.core.*
+import androidx.camera.core.AspectRatio
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.fruitrecognitionapp.databinding.CameraLayoutBinding
-import com.example.fruitrecognitionapp.databinding.LandingPageBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
-class CameraActivity : AppCompatActivity() {
-
+class HomeActivity : AppCompatActivity() {
     private val mainBinding: CameraLayoutBinding by lazy {
         CameraLayoutBinding.inflate(layoutInflater)
     }
@@ -61,13 +64,15 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(mainBinding.root)
 
-        val localImageButton: ImageButton = findViewById(R.id.local_imageIB)
-
         val backButton : ImageButton = findViewById(R.id.backBtn)
 
-        backButton.setOnClickListener {
-            startActivity(Intent(this, LandingPageActivity::class.java))
+        backButton.setOnClickListener{
+            val intent = Intent(this, LandingPageActivity::class.java)
+            startActivity(intent)
+            finish()
         }
+
+        val localImageButton: ImageButton = findViewById(R.id.local_imageIB)
 
         localImageButton.setOnClickListener {
             // Create an Intent to open the local image picker
@@ -84,13 +89,6 @@ class CameraActivity : AppCompatActivity() {
             takePhoto()
         }
         scheduleNotificationWorker()
-
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("CameraActivity", "onBackPressed() called")
-        finish()
     }
 
     private fun scheduleNotificationWorker() {
@@ -253,13 +251,13 @@ class CameraActivity : AppCompatActivity() {
         imageCapture.takePicture(outputOption, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 val message = "Photo Captured Successfully: ${outputFileResults.savedUri}"
-                Toast.makeText(this@CameraActivity, message, Toast.LENGTH_LONG).show()
+                Toast.makeText(this@HomeActivity, message, Toast.LENGTH_LONG).show()
 
                 processImage("selectedImageUri", outputFileResults.savedUri)
             }
 
             override fun onError(exception: ImageCaptureException) {
-                Toast.makeText(this@CameraActivity, exception.message.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this@HomeActivity, exception.message.toString(), Toast.LENGTH_LONG).show()
             }
         })
     }
@@ -279,10 +277,23 @@ class CameraActivity : AppCompatActivity() {
 
     // Passes selected or captured image into the trained model
     private fun processImage(imageName: String, uri: Uri?) {
-        val intent = Intent(this@CameraActivity, FruitDetailsActivity::class.java)
+        val intent = Intent(this@HomeActivity, FruitDetailsActivity::class.java)
         intent.putExtra(imageName, uri.toString())
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_static)
     }
-    
 }
+// TO IMPLEMENT LATER
+/*
+class ModalBottomSheet : BottomSheetDialogFragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? = inflater.inflate(R.layout.modal_bottom_sheet_content, container, false)
+
+    companion object {
+        const val TAG = "ModalBottomSheet"
+    }
+}*/
