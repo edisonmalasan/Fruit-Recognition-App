@@ -5,9 +5,4 @@
         android:enabled="true"
         android:icon="@drawable/camera_icon"
         android:title="@string/camera_view"/>
-    <item
-        android:id="@+id/item_2"
-        android:enabled="true"
-        android:icon="@drawable/history_logs"
-        android:title="History"/>
 </menu>
