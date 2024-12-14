@@ -16,7 +16,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/lightGreen"
+        android:background="@color/orange"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
