@@ -221,7 +221,7 @@ class FruitDetailsActivity : AppCompatActivity() {
         val confidence = output[maxIndex] * 100
         Log.d("FruitDetailsActivity", "Confidence: $confidence%")
 
-        if (confidence < 200) { // 200 or 225
+        if (confidence < 100) { // 200 or 225
             return "Unknown"
         }
 
