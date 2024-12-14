@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso
 import org.pytorch.IValue
 import org.pytorch.Module
 import org.pytorch.Tensor
+import org.w3c.dom.Text
 import java.io.File
 import java.io.InputStream
 
@@ -39,12 +41,13 @@ class FruitDetailsActivity : AppCompatActivity() {
 
         nutritionRecyclerView = findViewById(R.id.nutritionRecyclerView)
         healthRecyclerView = findViewById(R.id.healthRecyclerView)
+
         nutritionRecyclerView.layoutManager = LinearLayoutManager(this)
         healthRecyclerView.layoutManager = LinearLayoutManager(this)
 
         // load the model
         try {
-            val modelFilePath = assetFilePath("IdentiFruit_Model_cpu.pt")
+            val modelFilePath = assetFilePath("IdentiFruit_Model_cpu_V2.pt")
             Log.d("FruitDetailsActivity", "Model file path: $modelFilePath, Exists: ${File(modelFilePath).exists()}")
 
             model = Module.load(modelFilePath)  // Ensure correct extension
@@ -83,6 +86,7 @@ class FruitDetailsActivity : AppCompatActivity() {
         val fruitName = findViewById<TextView>(R.id.fruit)
         fruitName.text = predictedClass
         fetchFruitData(fruitName.text.toString())
+        getReference(predictedClass)
     }
 
     private fun predictFruit(imageUri: Uri) {
@@ -278,6 +282,36 @@ class FruitDetailsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * get necessary reference of the predicted fruit
+     */
+    private fun getReference(predicted_class: String) {
+        val reference = findViewById<TextView>(R.id.fruit_reference)
+        when (predicted_class.lowercase()) {
+            "apple" -> reference.text = "https://www.healthline.com/nutrition/foods/apples"
+            "banana" -> reference.text = "https://www.healthline.com/nutrition/foods/bananas"
+            "bell pepper" -> reference.text = "https://www.healthline.com/nutrition/foods/bell-peppers"
+            "chilli pepper" -> reference.text = "https://www.healthline.com/nutrition/foods/chili-peppers"
+            "corn" -> reference.text = "https://www.healthline.com/nutrition/foods/corn"
+            "eggplant" -> reference.text = "https://www.healthline.com/nutrition/foods/eggplant-benefits"
+            "grapes" -> reference.text = "https://www.healthline.com/nutrition/foods/benefits-of-grapes"
+            "jalapeno" -> reference.text = "https://www.healthline.com/nutrition/foods/jalapeno-health-benefits"
+            "kiwi" -> reference.text = "https://www.healthline.com/nutrition/foods/kiwi-benefits"
+            "lemon" -> reference.text = "https://www.healthline.com/nutrition/foods/lemons"
+            "mango" -> reference.text = "https://www.healthline.com/nutrition/foods/mango"
+            "onion" -> reference.text = "https://www.healthline.com/nutrition/foods/onions"
+            "orange" -> reference.text = "https://www.healthline.com/nutrition/foods/oranges"
+            "paprika" -> reference.text = "https://www.healthline.com/nutrition/foods/paprika-benefits"
+            "pear" -> reference.text = "https://www.healthline.com/nutrition/foods/benefits-of-pears"
+            "pineapple" -> reference.text = "https://www.healthline.com/nutrition/foods/benefits-of-pineapple"
+            "pomegranate" -> reference.text = "https://www.healthline.com/nutrition/foods/12-proven-benefits-of-pomegranate"
+            "sweetcorn" -> reference.text = "https://www.healthline.com/nutrition/foods/corn"
+            "tomato" -> reference.text = "https://www.healthline.com/nutrition/foods/tomatoes"
+            "watermelon" -> reference.text = "https://www.healthline.com/nutrition/foods/watermelon"
+            else -> reference.text = "No available reference link for this image"
+        }
+        reference.movementMethod = LinkMovementMethod.getInstance()
+    }
 
     private fun updateUI(nutritionalValues: List<ListItem>, healthBenefits: List<ListItem>) {
         Log.d("FruitDetailsActivity", "Updating UI with nutritional and health data.")

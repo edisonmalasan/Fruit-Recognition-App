@@ -128,7 +128,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="References"
+                android:text="Reference"
                 android:fontFamily="@font/gilroy_bold"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -136,57 +136,19 @@
                 android:layout_marginStart="20dp"/>
 
             <TextView
+                android:id="@+id/fruit_reference"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="20dp"
-                android:text="- reference 1 here"
+                android:text="reference"
+                android:autoLink="web"
                 android:clickable="true"
                 android:focusable="true"
                 android:textSize="16sp"
                 android:fontFamily="@font/gilroy_regular"
                 android:textColor="@color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="20dp"
-                android:text="- reference 2 here"
-                android:clickable="true"
-                android:focusable="true"
-                android:textSize="16sp"
-                android:fontFamily="@font/gilroy_regular"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="20dp"
-                android:text="- reference 3 here"
-                android:clickable="true"
-                android:focusable="true"
-                android:textSize="16sp"
-                android:fontFamily="@font/gilroy_regular"
-                android:textColor="@color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="20dp"
-                android:text="- reference 4 here"
-                android:clickable="true"
-                android:focusable="true"
-                android:textSize="16sp"
-                android:fontFamily="@font/gilroy_regular"
-                android:textColor="@color/white"/>
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
